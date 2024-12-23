@@ -1,0 +1,58 @@
+<h2 mat-dialog-title>Create Faction</h2>
+<mat-dialog-content>
+  <form #factionForm="ngForm">
+    <!-- Faction Type Dropdown -->
+    <mat-form-field appearance="outline">
+      <mat-label>Faction Type</mat-label>
+      <mat-select [(ngModel)]="faction.type" name="type" required>
+        <mat-option *ngFor="let type of factionTypes" [value]="type">
+          {{ type }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Description Textbox -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Description</mat-label>
+      <textarea matInput [(ngModel)]="faction.description" name="description"></textarea>
+    </mat-form-field>
+
+    <!-- Leader Inputs -->
+    <h3>Leader</h3>
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput [(ngModel)]="faction.leader.name" name="leaderName" required />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Title</mat-label>
+      <input matInput [(ngModel)]="faction.leader.title" name="leaderTitle" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Description</mat-label>
+      <textarea matInput [(ngModel)]="faction.leader.description" name="leaderDescription"></textarea>
+    </mat-form-field>
+
+    <!-- Associates Section -->
+    <h3>Associates</h3>
+    <div *ngFor="let associate of faction.associates; let i = index">
+      <h4>Associate {{ i + 1 }}</h4>
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput [(ngModel)]="associate.name" [name]="'associateName' + i" required />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Title</mat-label>
+        <input matInput [(ngModel)]="associate.title" [name]="'associateTitle' + i" />
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Description</mat-label>
+        <textarea matInput [(ngModel)]="associate.description" [name]="'associateDescription' + i"></textarea>
+      </mat-form-field>
+    </div>
+    <button mat-button color="primary" type="button" (click)="addAssociate()">+ Add Associate</button>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button color="primary" (click)="save()">Save</button>
+</mat-dialog-actions>

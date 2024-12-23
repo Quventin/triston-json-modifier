@@ -1,0 +1,96 @@
+
+
+<h2 mat-dialog-title>Modify Player Data</h2>
+
+<mat-dialog-content>
+  <!-- Player Name -->
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Name</mat-label>
+    <input matInput [(ngModel)]="modifiedPlayer.name" />
+  </mat-form-field>
+
+  <!-- House Power Adjustment -->
+  <div class="house-power">
+    <span>House Power:</span>
+    <button mat-icon-button color="primary" (click)="adjustHousePower(1)">
+      <mat-icon>add</mat-icon>
+    </button>
+    <span>{{ getHouseFaction()?.power || 0 }}</span>
+    <button mat-icon-button color="primary" (click)="adjustHousePower(-1)">
+      <mat-icon>remove</mat-icon>
+    </button>
+  </div>
+
+  <!-- Relationship with Player Factions -->
+  <h3>Relationship with Player Factions</h3>
+  <div class="table-container">
+    <table mat-table [dataSource]="modifiedPlayer.relationshipWithPF" class="mat-elevation-z8">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let rel"> {{ rel.factionId }} </td>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let rel"> {{ rel.name }} </td>
+      </ng-container>
+      <ng-container matColumnDef="relationship">
+        <th mat-header-cell *matHeaderCellDef> Relationship </th>
+        <td mat-cell *matCellDef="let rel">
+          <button mat-icon-button color="primary" (click)="adjustRelationshipWithPF(rel.factionId, 1)">
+            <mat-icon>add</mat-icon>
+          </button>
+          {{ rel.relationship }}
+          <button mat-icon-button color="primary" (click)="adjustRelationshipWithPF(rel.factionId, -1)">
+            <mat-icon>remove</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="['id', 'name', 'relationship']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['id', 'name', 'relationship']"></tr>
+    </table>
+  </div>
+
+  <!-- Relationship with Minor Factions -->
+  <h3>Relationship with Minor Factions</h3>
+  <div class="table-container">
+    <table mat-table [dataSource]="modifiedPlayer.relationshipWithMifac" class="mat-elevation-z8">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let rel"> {{ rel.factionId }} </td>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let rel"> {{ rel.name }} </td>
+      </ng-container>
+      <ng-container matColumnDef="relationship">
+        <th mat-header-cell *matHeaderCellDef> Relationship </th>
+        <td mat-cell *matCellDef="let rel">
+          <button mat-icon-button color="primary" (click)="adjustRelationshipWithMifac(rel.factionId, 1)">
+            <mat-icon>add</mat-icon>
+          </button>
+          {{ rel.relationship }}
+          <button mat-icon-button color="primary" (click)="adjustRelationshipWithMifac(rel.factionId, -1)">
+            <mat-icon>remove</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="['id', 'name', 'relationship']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['id', 'name', 'relationship']"></tr>
+    </table>
+  </div>
+
+  <!-- Deaths and Kills -->
+  <mat-form-field appearance="fill">
+    <mat-label>Deaths</mat-label>
+    <input matInput type="number" [(ngModel)]="modifiedPlayer.deaths" />
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Kills</mat-label>
+    <input matInput type="number" [(ngModel)]="modifiedPlayer.kills" />
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Cancel</button>
+  <button mat-button color="primary" (click)="save()">Save</button>
+</mat-dialog-actions>

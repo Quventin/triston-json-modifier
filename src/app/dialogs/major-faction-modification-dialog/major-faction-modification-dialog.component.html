@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>Modify Major Faction</h2>
+
+<mat-dialog-content>
+  <!-- Faction Name -->
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Name</mat-label>
+    <input matInput [(ngModel)]="modifiedFaction.name" />
+  </mat-form-field>
+
+  <!-- Power Adjustment -->
+  <div class="power-adjustment">
+    <span>Power:</span>
+    <button mat-icon-button color="primary" (click)="adjustPower(1)">
+      <mat-icon>add</mat-icon>
+    </button>
+    <span>{{ modifiedFaction.power || 0 }}</span>
+    <button mat-icon-button color="primary" (click)="adjustPower(-1)">
+      <mat-icon>remove</mat-icon>
+    </button>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Cancel</button>
+  <button mat-button color="primary" (click)="save()">Save</button>
+</mat-dialog-actions>

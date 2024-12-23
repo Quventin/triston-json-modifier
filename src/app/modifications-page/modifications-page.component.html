@@ -1,0 +1,283 @@
+<h1>JSON Modifier App</h1>
+<div>
+  <button (click)="createSource()">Create New Source</button>
+  <input type="file" (change)="onFileSelected($event)" />
+  <button (click)="loadSource()">Load Source</button>
+</div>
+
+<div class="modifications-container flex" *ngIf="initialData">
+  <div class="modifications-list w-1/2 p-4">
+    <table mat-table [dataSource]="modifications" class="mat-elevation-z8">
+      <!-- Title Column -->
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef>Title</th>
+        <td mat-cell *matCellDef="let mod">{{ mod.title }}</td>
+      </ng-container>
+
+      <!-- Content Column (Truncated JSON String) -->
+      <ng-container matColumnDef="content">
+        <th mat-header-cell *matHeaderCellDef>Changes</th>
+        <td mat-cell *matCellDef="let mod" (click)="openJsonDialog(mod)">
+          {{ mod.content | json | slice : 0 : 50
+          }}{{ (mod.content | json).length > 50 ? "..." : "" }}
+        </td>
+      </ng-container>
+
+      <!-- Actions Column (Delete Icon) -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let mod; let i = index">
+          <button mat-icon-button color="warn" (click)="deleteModification(i)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr
+        mat-header-row
+        *matHeaderRowDef="['title', 'content', 'actions']"
+      ></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: ['title', 'content', 'actions']"
+      ></tr>
+    </table>
+  </div>
+
+  <div class="buttons-panel w-1/2 p-4">
+    <button mat-raised-button color="primary" (click)="openMifacDialog()">
+      Add new Mifac
+    </button>
+    <button mat-raised-button color="primary" (click)="openMafacDialog()">
+      Add new Mafac
+    </button>
+    <button mat-raised-button color="primary" (click)="openPFacDialog()">
+      Add new PlayerFaction
+    </button>
+    <button mat-raised-button color="primary" (click)="openPlayerDialog()">
+      Add new Player
+    </button>
+    <button mat-raised-button color="accent" (click)="openBattleDialog()">
+      Add new Battle
+    </button>
+    <button mat-raised-button color="primary" (click)="normalizeFactions()">
+      Normalize Factions
+    </button>
+    <button mat-raised-button color="primary" (click)="saveModifications()">
+      Apply all modifications
+    </button>
+    <button mat-raised-button color="accent" (click)="downloadJson()">
+      Download JSON
+    </button>
+  </div>
+</div>
+<div class="modifications-tables-container p-4" *ngIf="initialData">
+  <div class="modifications-tables-container">
+    <!-- Row 1 -->
+    <div class="row">
+      <!-- Column 1: Major Factions (mafac) -->
+      <div class="col-25">
+        <h3>Major Factions (mafac)</h3>
+        <div class="table-container">
+          <table
+            mat-table
+            [dataSource]="initialData.mafac"
+            class="mat-elevation-z8"
+          >
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef>ID</th>
+              <td
+                mat-cell
+                *matCellDef="let faction"
+                (click)="openMajorFactionModificationDialog(faction)"
+              >
+                {{ faction.id }}
+              </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>Name</th>
+              <td
+                mat-cell
+                *matCellDef="let faction"
+                (click)="openMajorFactionModificationDialog(faction)"
+              >
+                {{ faction.name }}
+              </td>
+            </ng-container>
+
+            <!-- Power Column -->
+            <ng-container matColumnDef="power">
+              <th mat-header-cell *matHeaderCellDef>Power</th>
+              <td mat-cell *matCellDef="let faction">
+                {{ faction.power }}
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="['id', 'name', 'power']"></tr>
+            <tr
+              mat-row
+              *matRowDef="let row; columns: ['id', 'name', 'power']"
+            ></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Column 2: Players -->
+      <div class="col-75">
+        <h3>Players</h3>
+        <div class="table-container">
+          <table
+            mat-table
+            [dataSource]="initialData.players"
+            class="mat-elevation-z8"
+          >
+            <!-- ID Column -->
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef>ID</th>
+              <td
+                mat-cell
+                *matCellDef="let player"
+                (click)="openPlayerModificationDialog(player)"
+              >
+                {{ player.id }}
+              </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>Name</th>
+              <td
+                mat-cell
+                *matCellDef="let player"
+                (click)="openPlayerModificationDialog(player)"
+              >
+                {{ player.name }}
+              </td>
+            </ng-container>
+
+            <!-- House Power Column -->
+            <ng-container matColumnDef="housePower">
+              <th mat-header-cell *matHeaderCellDef>House Power</th>
+              <td mat-cell *matCellDef="let player">
+                {{ getHousePower(player.houseId) }}
+              </td>
+            </ng-container>
+
+            <!-- Relationship with House Column -->
+            <ng-container matColumnDef="relationship">
+              <th mat-header-cell *matHeaderCellDef>Relationship with House</th>
+              <td mat-cell *matCellDef="let player">
+                {{ getRelationshipWithHouse(player) }}
+              </td>
+            </ng-container>
+
+            <tr
+              mat-header-row
+              *matHeaderRowDef="['id', 'name', 'housePower', 'relationship']"
+            ></tr>
+            <tr
+              mat-row
+              *matRowDef="
+                let row;
+                columns: ['id', 'name', 'housePower', 'relationship']
+              "
+            ></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2 -->
+    <div class="row">
+      <!-- Column 1: Player Factions (playerFactions) and GSC Minor Factions -->
+      <div class="col-25">
+        <h3>Player Factions (playerFactions)</h3>
+        <div class="table-container">
+          <table
+            mat-table
+            [dataSource]="initialData.playerFactions"
+            class="mat-elevation-z8"
+          >
+            <!-- ID Column -->
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef>ID</th>
+              <td mat-cell *matCellDef="let faction" (click)="openPlayerFactionModificationDialog(faction)">{{ faction.id }}</td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>Name</th>
+              <td mat-cell *matCellDef="let faction" (click)="openPlayerFactionModificationDialog(faction)">{{ faction.name }}</td>
+            </ng-container>
+
+            <!-- Power Column -->
+            <ng-container matColumnDef="power">
+              <th mat-header-cell *matHeaderCellDef >Power</th>
+              <td mat-cell *matCellDef="let faction" (click)="openPlayerFactionModificationDialog(faction)">{{ faction.power }}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="['id', 'name', 'power']"></tr>
+            <tr
+              mat-row
+              *matRowDef="let row; columns: ['id', 'name', 'power']"
+
+            ></tr>
+          </table>
+        </div>
+
+        <h3>GSC Minor Factions</h3>
+        <div class="table-container">
+          <table
+            mat-table
+            [dataSource]="getGscMinorFactions()"
+            class="mat-elevation-z8"
+          >
+            <!-- ID Column -->
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef>ID</th>
+              <td mat-cell *matCellDef="let faction" (click)="openMinorFactionModificationDialog(faction)">{{ faction.id }}</td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>Name</th>
+              <td mat-cell *matCellDef="let faction">{{ faction.name }}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="['id', 'name']"></tr>
+            <tr mat-row *matRowDef="let row; columns: ['id', 'name']"></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Column 2: Minor Factions (mifac) -->
+      <div class="col-75">
+        <h3>Minor Factions (mifac)</h3>
+        <div class="table-container">
+          <table
+            mat-table
+            [dataSource]="initialData.mifac"
+            class="mat-elevation-z8"
+          >
+            <!-- ID Column -->
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef>ID</th>
+              <td mat-cell *matCellDef="let faction" (click)="openMinorFactionModificationDialog(faction)">{{ faction.id }}</td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>Name</th>
+              <td mat-cell *matCellDef="let faction" (click)="openMinorFactionModificationDialog(faction)">{{ faction.name }}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="['id', 'name']"></tr>
+            <tr mat-row *matRowDef="let row; columns: ['id', 'name']"></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

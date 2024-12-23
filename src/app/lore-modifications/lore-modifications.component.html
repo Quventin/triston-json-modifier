@@ -1,0 +1,58 @@
+<h1>JSON Modifier App</h1>
+<div>
+  <button (click)="createSource()">Create New Source</button>
+  <input type="file" (change)="onFileSelected($event)" />
+  <button (click)="loadSource()">Load Source</button>
+</div>
+
+<div class="modifications-container flex" *ngIf="selectedFile">
+  <div class="modifications-list w-1/2 p-4">
+    <table mat-table [dataSource]="modifications" class="mat-elevation-z8">
+      <!-- Title Column -->
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef>Title</th>
+        <td mat-cell *matCellDef="let mod">{{ mod.title }}</td>
+      </ng-container>
+
+      <!-- Content Column (Truncated JSON String) -->
+      <ng-container matColumnDef="content">
+        <th mat-header-cell *matHeaderCellDef>Changes</th>
+        <td mat-cell *matCellDef="let mod" (click)="openJsonDialog(mod)">
+          {{ mod.content | json | slice : 0 : 50
+          }}{{ (mod.content | json).length > 50 ? "..." : "" }}
+        </td>
+      </ng-container>
+
+      <!-- Actions Column (Delete Icon) -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let mod; let i = index">
+          <button mat-icon-button color="warn" (click)="deleteModification(i)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr
+        mat-header-row
+        *matHeaderRowDef="['title', 'content', 'actions']"
+      ></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: ['title', 'content', 'actions']"
+      ></tr>
+    </table>
+  </div>
+
+  <div class="buttons-panel w-1/2 p-4">
+    <button mat-raised-button color="primary" (click)="openRadioDialog()">
+      Add new Mifac
+    </button>
+    <button mat-raised-button color="primary" (click)="openLoreDialog()">
+      Add new Mafac
+    </button>
+    <button mat-raised-button color="primary" (click)="saveModifications()">
+      Apply all modifications
+    </button>
+  </div>
+</div>

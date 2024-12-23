@@ -1,0 +1,51 @@
+<h2 mat-dialog-title>Create Radio</h2>
+<mat-dialog-content>
+  <form #radioForm="ngForm">
+    <!-- Cycle Input -->
+    <mat-form-field appearance="outline">
+      <mat-label>Cycle</mat-label>
+      <div matSuffix>
+        <button mat-icon-button type="button" (click)="decrement('cycle')">
+          <mat-icon>remove</mat-icon>
+        </button>
+        <button mat-icon-button type="button" (click)="increment('cycle')">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <input matInput type="number" [(ngModel)]="radio.cycle" name="cycle" />
+    </mat-form-field>
+
+    <!-- Week Input -->
+    <mat-form-field appearance="outline">
+      <mat-label>Week</mat-label>
+      <div matSuffix>
+        <button mat-icon-button type="button" (click)="decrement('week')">
+          <mat-icon>remove</mat-icon>
+        </button>
+        <button mat-icon-button type="button" (click)="increment('week')">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <input matInput type="number" [(ngModel)]="radio.week" name="week" />
+    </mat-form-field>
+
+    <!-- Author Input -->
+    <mat-form-field appearance="outline">
+      <mat-label>Author</mat-label>
+      <input matInput [(ngModel)]="radio.author" name="author" />
+    </mat-form-field>
+
+    <!-- Broadcasts Input -->
+    <div *ngFor="let broadcast of radio.broadcasts; let i = index">
+      <mat-form-field appearance="outline">
+        <mat-label>Broadcast {{ i + 1 }}</mat-label>
+        <input matInput [(ngModel)]="radio.broadcasts[i]" [name]="'broadcast' + i" />
+      </mat-form-field>
+    </div>
+    <button mat-button color="primary" type="button" (click)="addBroadcast()">+ Add Broadcast</button>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button color="primary" (click)="save()">Save</button>
+</mat-dialog-actions>

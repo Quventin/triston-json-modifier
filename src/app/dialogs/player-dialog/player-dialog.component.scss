@@ -1,0 +1,30 @@
+.dialog-content {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .player-form,
+  .player-table {
+    padding: 1rem;
+  }
+  
+  .form-actions {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .hover-delete {
+    visibility: hidden;
+  }
+  
+  td:hover .hover-delete {
+    visibility: visible;
+  }
+  

@@ -1,0 +1,56 @@
+.modifications-container {
+  max-width: 800px;
+  margin: 0 auto;
+  .selected {
+    background-color: #e0f7fa;
+  }
+
+  .buttons-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+table {
+  width: 100%;
+}
+
+td {
+  cursor: pointer;
+}
+
+.modifications-tables-container {
+  display: flex;
+  flex-direction: column;
+
+  gap: 2rem;
+}
+
+.row {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-evenly;
+}
+
+.col-25 {
+  width: 45%;
+  border: 1px solid black;
+  border-radius: 8px;
+}
+
+.col-75 {
+  width: 45%;
+  border: 1px solid black;
+  border-radius: 8px;
+}
+
+table {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.table-container {
+  max-height: 700px;
+  overflow-y: auto;
+}

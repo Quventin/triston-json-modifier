@@ -1,0 +1,76 @@
+[
+  {
+    "id": "battle-289",
+    "players": [
+      {
+        "id": "player-1809",
+        "name": "Brood Brothers",
+        "sideMission": true,
+        "sideMissionRelationId": "pfac-1693",
+        "subPlot": false,
+        "winner": true,
+        "subPlotRelationId": ""
+      },
+      {
+        "id": "player-5147",
+        "name": "Seven Deadly Sins",
+        "sideMission": false,
+        "sideMissionRelationId": "",
+        "subPlot": false,
+        "winner": false,
+        "subPlotRelationId": ""
+      }
+    ],
+    "isEvent": false,
+    "isFlashpoint": false,
+    "isDraw": false,
+    "scenarioName": "Scenario A",
+    "date": "2024-11-24T19:15:03.172Z"
+  },
+  {
+    "id": "battle-9341",
+    "players": [
+      {
+        "id": "player-1809",
+        "name": "Brood Brothers",
+        "sideMission": true,
+        "sideMissionRelationId": "pfac-1693",
+        "subPlot": false,
+        "winner": false,
+        "subPlotRelationId": ""
+      },
+      {
+        "id": "player-5147",
+        "name": "Seven Deadly Sins",
+        "sideMission": false,
+        "sideMissionRelationId": "",
+        "subPlot": false,
+        "winner": true,
+        "subPlotRelationId": ""
+      },
+      {
+        "id": "player-3738",
+        "name": "Blood Red Desert",
+        "sideMission": false,
+        "sideMissionRelationId": "",
+        "subPlot": false,
+        "winner": false,
+        "subPlotRelationId": ""
+      },
+      {
+        "id": "player-6459",
+        "name": "Helmawr' Prosecutors",
+        "sideMission": false,
+        "sideMissionRelationId": "",
+        "subPlot": false,
+        "winner": false,
+        "subPlotRelationId": ""
+      }
+    ],
+    "isEvent": false,
+    "isFlashpoint": false,
+    "isDraw": false,
+    "scenarioName": "Scenario A",
+    "date": "2024-11-24T19:15:18.599Z"
+  }
+]

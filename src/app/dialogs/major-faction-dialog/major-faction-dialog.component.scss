@@ -1,0 +1,28 @@
+.dialog-content {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .major-faction-table,
+  .major-faction-form {
+    padding: 1rem;
+  }
+  
+  .major-faction-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .form-actions {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
