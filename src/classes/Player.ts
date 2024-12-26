@@ -3,7 +3,7 @@ import { RelationWithFaction } from "./RelationshWithFaction";
 export interface Player {
     id: string;
     name: string;
-    houseId: string; 
+    houseId: string;
     relationshipWithPF: Array<RelationWithFaction>;
     relationshipWithMifac: Array<RelationWithFaction>;
     battles: number;
@@ -13,5 +13,5 @@ export interface Player {
     lose: number;
     isGsc: boolean;
     isChaos: boolean;
-    
+    isRetired?: boolean;
 }

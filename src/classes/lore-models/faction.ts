@@ -1,7 +1,7 @@
 export interface Faction {
   type: FactionType
   description?: string
-  leader: FactionPersona
+  leader: Array<FactionPersona>
   associates: Array<FactionPersona>
 }
 

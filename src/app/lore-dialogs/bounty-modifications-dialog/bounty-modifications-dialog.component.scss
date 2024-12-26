@@ -1,0 +1,37 @@
+.dialog-container {
+  display: flex;
+  gap: 20px;
+}
+
+.bounty-list {
+  flex: 1;
+  max-width: 300px;
+}
+
+.bounty-form {
+  flex: 2;
+}
+
+.date-inputs {
+  display: flex;
+  gap: 10px;
+}
+
+.half-width {
+  width: 50%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}

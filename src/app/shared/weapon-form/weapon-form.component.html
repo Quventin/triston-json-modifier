@@ -1,0 +1,20 @@
+<div>
+  <h3>Weapon Form</h3>
+
+  <!-- Weapon Type -->
+  <label>Weapon Type</label>
+  <input
+    type="text"
+    [(ngModel)]="weapon.weaponType"
+    placeholder="Enter weapon type"
+  />
+
+  <!-- Weapon Characteristics -->
+  <div *ngFor="let characteristic of weapon.weaponCharacteristics; index as i">
+    <app-weapon-characteristic-form
+      [(ngModel)]="weapon.weaponCharacteristics[i]"
+    ></app-weapon-characteristic-form>
+  </div>
+
+  <button (click)="addCharacteristic()">+ Add Characteristic</button>
+</div>

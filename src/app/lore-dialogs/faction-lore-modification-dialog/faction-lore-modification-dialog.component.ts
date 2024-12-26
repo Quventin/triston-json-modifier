@@ -38,11 +38,7 @@ export class FactionLoreModificationDialogComponent {
   faction: Faction = {
     type: FactionType.PFAC,
     description: '',
-    leader: {
-      name: '',
-      title: '',
-      description: '',
-    },
+    leader: [],
     associates: [],
   };
 
@@ -50,6 +46,14 @@ export class FactionLoreModificationDialogComponent {
 
   addAssociate(): void {
     this.faction.associates.push({
+      name: '',
+      title: '',
+      description: '',
+    });
+  }
+
+  addLeader(): void {
+    this.faction.leader.push({
       name: '',
       title: '',
       description: '',

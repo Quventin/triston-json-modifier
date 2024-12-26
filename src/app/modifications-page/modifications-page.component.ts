@@ -336,7 +336,11 @@ export class ModificationsPageComponent {
     // Start with the existing overall data from initialData
     const overall = new Overall();
     Object.assign(overall, this.initialData); // Copy existing data to retain values
-
+    overall.players.forEach((p) => {
+      if(p.isRetired === undefined || p.isRetired === null) {
+        p.isRetired = false;
+      }
+    })
     // Merge modifications into the overall object
     console.log('modific', this.modifications);
     overall.mifac = this.mergeUniqueFactions(

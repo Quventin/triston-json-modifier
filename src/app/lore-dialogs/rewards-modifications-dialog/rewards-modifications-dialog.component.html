@@ -1,0 +1,45 @@
+<div class="dialog">
+  <!-- MIFAC Name -->
+  <section>
+    <h2>MIFAC Name</h2>
+    <input
+      type="text"
+      [(ngModel)]="reward.mifacName"
+      placeholder="Enter MIFAC name"
+    />
+  </section>
+
+  <!-- Reward Item Section -->
+  <section>
+    <h2>Reward Item</h2>
+    <input
+      type="text"
+      [(ngModel)]="reward.item.name"
+      placeholder="Item Name"
+    />
+    <textarea
+      [(ngModel)]="reward.item.description"
+      placeholder="Enter description"
+    ></textarea>
+    <label>
+      <input
+        type="checkbox"
+        [(ngModel)]="reward.item.isWeapon"
+      />
+      Is Weapon?
+    </label>
+
+    <!-- Render Weapon Form -->
+    <app-weapon-form
+      *ngIf="reward.item.isWeapon"
+      [(ngModel)]="reward.item.weaponValue"
+    ></app-weapon-form>
+  </section>
+
+  <!-- Hirable Special Unit -->
+  <section>
+    <app-hirable-special-unit-form
+      [(ngModel)]="reward.specialUnit"
+    ></app-hirable-special-unit-form>
+  </section>
+</div>

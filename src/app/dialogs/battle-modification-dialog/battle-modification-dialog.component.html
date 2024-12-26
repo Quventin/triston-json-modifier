@@ -68,14 +68,14 @@
           {{ player.name }}
         </mat-checkbox>
       </div>
-     
+
 
       <!-- Winners Selection -->
       <h4>Mark Winners</h4>
       <div class="winners-grid">
         <mat-checkbox
           *ngFor="let player of selectedPlayers"
-          [(ngModel)]="player.winner" 
+          [(ngModel)]="player.winner"
         >
           {{ player.name }}
         </mat-checkbox>
@@ -85,7 +85,7 @@
       <h4>Player Details</h4>
       <div *ngFor="let player of selectedPlayers" class="player-card">
         <p>{{ player.name }}</p>
-      
+
         <!-- Side Mission Checkbox and Dropdown -->
         <mat-checkbox [(ngModel)]="player.sideMission" (change)="onSideMissionChange(player)">
           Side Mission
@@ -96,9 +96,19 @@
             <mat-option *ngFor="let faction of allFactions" [value]="faction.id">
               {{ faction.name }}
             </mat-option>
+            <mat-option [value]="null">Other</mat-option>
           </mat-select>
         </mat-form-field>
-      
+
+        <mat-form-field
+          class="full-width"
+          *ngIf="player.otherSideMission"
+          appearance="fill"
+        >
+          <mat-label>Custom Scenario Name</mat-label>
+          <input matInput [(ngModel)]="player.sideMissionRelationId" />
+        </mat-form-field>
+
         <!-- Sub Plot Checkbox and Dropdown -->
         <mat-checkbox [(ngModel)]="player.subPlot" (change)="onSubPlotChange(player)">
           Sub Plot

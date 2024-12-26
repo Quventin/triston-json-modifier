@@ -16,4 +16,5 @@ export interface PlayerInBattle {
   sideMissionRelationId?: string;
   subPlot: boolean;
   subPlotRelationId?: string;
+  otherSideMission?: boolean;
 }

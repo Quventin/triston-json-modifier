@@ -19,18 +19,22 @@
 
     <!-- Leader Inputs -->
     <h3>Leader</h3>
-    <mat-form-field appearance="outline">
-      <mat-label>Name</mat-label>
-      <input matInput [(ngModel)]="faction.leader.name" name="leaderName" required />
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Title</mat-label>
-      <input matInput [(ngModel)]="faction.leader.title" name="leaderTitle" />
-    </mat-form-field>
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Description</mat-label>
-      <textarea matInput [(ngModel)]="faction.leader.description" name="leaderDescription"></textarea>
-    </mat-form-field>
+    <div *ngFor="let leader of faction.leader; let i = index">
+      <h4>Associate {{ i + 1 }}</h4>
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput [(ngModel)]="leader.name" [name]="'associateName' + i" required />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Title</mat-label>
+        <input matInput [(ngModel)]="leader.title" [name]="'associateTitle' + i" />
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Description</mat-label>
+        <textarea matInput [(ngModel)]="leader.description" [name]="'associateDescription' + i"></textarea>
+      </mat-form-field>
+    </div>
+    <button mat-button color="primary" type="button" (click)="addLeader()">+ Add Associate</button>
 
     <!-- Associates Section -->
     <h3>Associates</h3>

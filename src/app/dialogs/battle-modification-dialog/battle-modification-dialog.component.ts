@@ -72,6 +72,7 @@ export class BattleModificationDialogComponent {
   selectedPlayers: PlayerInBattle[] = [];
   winners: Set<string> = new Set<string>();
   allFactions: Array<any> = [];
+  selectedOtherSideMission: boolean = false
 
   constructor(private cd: ChangeDetectorRef,
               private dialogRef: MatDialogRef<BattleModificationDialogComponent>,
@@ -84,7 +85,7 @@ export class BattleModificationDialogComponent {
               }
   ) {
     this.players = data.players;
-    this.allPlayers = this.players;
+    this.allPlayers = this.players.filter((v) => {v.isRetired});
     this.allFactions = [
       ...this.data.playerFactions.map((f) => ({id: f.id, name: f.name})),
       ...this.data.mifac.map((f) => ({id: f.id, name: f.name})),
@@ -185,20 +186,27 @@ export class BattleModificationDialogComponent {
         subPlot: false,
         winner: false,
         subPlotRelationId: '',
+        otherSideMission: false,
       };
       this.selectedPlayers = [...this.selectedPlayers, newSelectedPlaye];
     }
   }
 
   onSideMissionChange(player: any) {
+
     if (!player.sideMission) {
-      // If unchecked, reset sideMissionRelationId
       player.sideMissionRelationId = null;
+      player.otherSideMission = false;
     }
   }
 
   onSideMissionSelection(player: any, event: any) {
-    // Set sideMissionRelationId to the selected item's ID
+    if (event.value === null) { // "Other" selected
+      player.otherSideMission = true;
+      player.sideMission = true;
+    } else {
+      player.otherSideMission = false;
+    }
     player.sideMissionRelationId = event.value;
   }
 
